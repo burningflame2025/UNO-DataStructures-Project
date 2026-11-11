@@ -1,5 +1,6 @@
 import controller.Game;
 import model.BotPlayer;
+import model.Card;
 import model.HumanPlayer;
 import model.Player;
 
@@ -26,15 +27,13 @@ public class Main {
         Player currentPlayer = game.getCurrentPlayer();
 
         System.out.println("Current player: " + currentPlayer.getName());
-        System.out.println("Cards:");
+        System.out.println("Cards before drawing: " + currentPlayer.getHandSize());
 
-        for (int i = 0; i < currentPlayer.getHandSize(); i++) {
-            System.out.println(i + ": " + currentPlayer.getHand().get(i));
-        }
-        boolean result = game.playCard(0);
+        Card drawnCard = game.drawCardForCurrentPlayer();
 
-        System.out.println("Move successful: " + result);
-        System.out.println("New top card: " + game.getTopCard());
+        System.out.println("Drawn card: " + drawnCard);
+        System.out.println("Cards after drawing: " + currentPlayer.getHandSize());
+
         System.out.println("Next player: "
                 + game.getCurrentPlayer().getName());
     }

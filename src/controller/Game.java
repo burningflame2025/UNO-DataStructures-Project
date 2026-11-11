@@ -75,4 +75,17 @@ public class Game {
 
         return true;
     }
+
+    public Card drawCardForCurrentPlayer() {
+
+        Player currentPlayer = turnManager.getCurrentPlayer();
+
+        Card drawnCard = deck.drawCard();
+
+        currentPlayer.addCard(drawnCard);
+
+        turnManager.nextTurn();
+
+        return drawnCard;
+    }
 }
