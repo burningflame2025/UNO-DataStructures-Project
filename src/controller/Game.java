@@ -9,14 +9,19 @@ public class Game {
     private Deck deck;
     private SinglyLinkedList<Player> players;
     private Round round;
+    private TurnManager turnManager;
+    private RuleManager ruleManager;
 
     public Game() {
         deck = new Deck();
         players = new SinglyLinkedList<>();
+        turnManager = new TurnManager();
+        ruleManager = new RuleManager();
     }
 
     public void addPlayer(Player player) {
         players.addLast(player);
+        turnManager.addPlayer(player);
     }
 
     public void setupGame() {
@@ -41,7 +46,33 @@ public class Game {
     public void startRound() {
         round.startRound();
     }
+
     public Card getTopCard() {
         return round.getTopCard();
+    }
+
+    public Player getCurrentPlayer() {
+        return turnManager.getCurrentPlayer();
+    }
+
+    public boolean playCard(int cardIndex) {
+
+        Player currentPlayer = turnManager.getCurrentPlayer();
+
+        if (cardIndex < 0 || cardIndex >= currentPlayer.getHandSize()) {
+            return false;
+        }
+
+        Card selectedCard = currentPlayer.getHand().get(cardIndex);
+
+        if (!ruleManager.isValidMove(selectedCard, round.getTopCard())) {
+            return false;
+        }
+        currentPlayer.removeCard(cardIndex);
+        round.playCard(selectedCard);
+
+        turnManager.nextTurn();
+
+        return true;
     }
 }

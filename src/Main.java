@@ -1,31 +1,41 @@
-import controller.RuleManager;
-import model.Card;
-import model.CardType;
-import model.Color;
+import controller.Game;
+import model.BotPlayer;
+import model.HumanPlayer;
+import model.Player;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        RuleManager ruleManager = new RuleManager();
+        Game game = new Game();
 
-        Card topCard = new Card(Color.RED, CardType.NUMBER, 5);
+        HumanPlayer player1 = new HumanPlayer("Zahra");
+        BotPlayer player2 = new BotPlayer("Bot 1");
+        BotPlayer player3 = new BotPlayer("Bot 2");
 
-        Card sameColor = new Card(Color.RED, CardType.NUMBER, 2);
-        Card sameNumber = new Card(Color.BLUE, CardType.NUMBER, 5);
-        Card wildCard = new Card(Color.WILD, CardType.WILD, -1);
-        Card invalidCard = new Card(Color.GREEN, CardType.NUMBER, 8);
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        game.addPlayer(player3);
 
-        System.out.println("Same color: "
-                + ruleManager.isValidMove(sameColor, topCard));
+        game.setupGame();
+        game.dealCards(7);
+        game.startRound();
 
-        System.out.println("Same number: "
-                + ruleManager.isValidMove(sameNumber, topCard));
+        System.out.println("Top card: " + game.getTopCard());
 
-        System.out.println("Wild card: "
-                + ruleManager.isValidMove(wildCard, topCard));
+        Player currentPlayer = game.getCurrentPlayer();
 
-        System.out.println("Invalid card: "
-                + ruleManager.isValidMove(invalidCard, topCard));
+        System.out.println("Current player: " + currentPlayer.getName());
+        System.out.println("Cards:");
+
+        for (int i = 0; i < currentPlayer.getHandSize(); i++) {
+            System.out.println(i + ": " + currentPlayer.getHand().get(i));
+        }
+        boolean result = game.playCard(0);
+
+        System.out.println("Move successful: " + result);
+        System.out.println("New top card: " + game.getTopCard());
+        System.out.println("Next player: "
+                + game.getCurrentPlayer().getName());
     }
 }
