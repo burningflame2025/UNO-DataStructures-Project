@@ -1,17 +1,31 @@
-import model.Card;
-import model.CardType;
-import model.Color;
+import controller.Game;
+import model.BotPlayer;
+import model.HumanPlayer;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Card card1 = new Card(Color.RED, CardType.NUMBER, 5);
-        Card card2 = new Card(Color.BLUE, CardType.SKIP, -1);
-        Card card3 = new Card(Color.WILD, CardType.WILD, -1);
+        Game game = new Game();
 
-        System.out.println(card1);
-        System.out.println(card2);
-        System.out.println(card3);
+        HumanPlayer player1 = new HumanPlayer("Zahra");
+        BotPlayer player2 = new BotPlayer("Bot 1");
+        BotPlayer player3 = new BotPlayer("Bot 2");
+
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        game.addPlayer(player3);
+
+        game.setupGame();
+        game.dealCards(7);
+
+        System.out.println(player1.getName()
+                + " has " + player1.getHandSize() + " cards.");
+
+        System.out.println(player2.getName()
+                + " has " + player2.getHandSize() + " cards.");
+
+        System.out.println(player3.getName()
+                + " has " + player3.getHandSize() + " cards.");
     }
 }
