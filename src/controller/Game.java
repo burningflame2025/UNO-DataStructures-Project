@@ -84,8 +84,13 @@ public class Game {
 
         currentPlayer.addCard(drawnCard);
 
-        turnManager.nextTurn();
-
         return drawnCard;
+    }
+    public boolean isCardPlayable(Card card) {
+        return ruleManager.isValidMove(card, round.getTopCard());
+    }
+
+    public void endTurn() {
+        turnManager.nextTurn();
     }
 }
