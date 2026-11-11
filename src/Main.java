@@ -1,26 +1,31 @@
+import controller.TurnManager;
 import model.BotPlayer;
 import model.HumanPlayer;
-import model.Player;
-import structures.DoublyCircularLinkedList;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        DoublyCircularLinkedList<Player> players =
-                new DoublyCircularLinkedList<>();
+        TurnManager turnManager = new TurnManager();
 
-        players.add(new HumanPlayer("Zahra"));
-        players.add(new BotPlayer("Bot 1"));
-        players.add(new BotPlayer("Bot 2"));
+        turnManager.addPlayer(new HumanPlayer("Zahra"));
+        turnManager.addPlayer(new BotPlayer("Bot 1"));
+        turnManager.addPlayer(new BotPlayer("Bot 2"));
 
-        System.out.println("Current: " + players.getCurrent().getName());
+        System.out.println("Current player: "
+                + turnManager.getCurrentPlayer().getName());
 
-        System.out.println("Next: " + players.moveNext().getName());
-        System.out.println("Next: " + players.moveNext().getName());
-        System.out.println("Next: " + players.moveNext().getName());
+        System.out.println("Next player: "
+                + turnManager.nextTurn().getName());
 
-        System.out.println("Previous: "
-                + players.movePrevious().getName());
+        System.out.println("Next player: "
+                + turnManager.nextTurn().getName());
+
+        turnManager.reverseDirection();
+
+        System.out.println("Direction reversed!");
+
+        System.out.println("Next player: "
+                + turnManager.nextTurn().getName());
     }
 }
