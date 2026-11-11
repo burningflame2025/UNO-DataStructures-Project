@@ -1,31 +1,26 @@
-import controller.Game;
 import model.BotPlayer;
 import model.HumanPlayer;
+import model.Player;
+import structures.DoublyCircularLinkedList;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Game game = new Game();
+        DoublyCircularLinkedList<Player> players =
+                new DoublyCircularLinkedList<>();
 
-        HumanPlayer player1 = new HumanPlayer("Zahra");
-        BotPlayer player2 = new BotPlayer("Bot 1");
-        BotPlayer player3 = new BotPlayer("Bot 2");
+        players.add(new HumanPlayer("Zahra"));
+        players.add(new BotPlayer("Bot 1"));
+        players.add(new BotPlayer("Bot 2"));
 
-        game.addPlayer(player1);
-        game.addPlayer(player2);
-        game.addPlayer(player3);
+        System.out.println("Current: " + players.getCurrent().getName());
 
-        game.setupGame();
-        game.dealCards(7);
+        System.out.println("Next: " + players.moveNext().getName());
+        System.out.println("Next: " + players.moveNext().getName());
+        System.out.println("Next: " + players.moveNext().getName());
 
-        System.out.println(player1.getName()
-                + " has " + player1.getHandSize() + " cards.");
-
-        System.out.println(player2.getName()
-                + " has " + player2.getHandSize() + " cards.");
-
-        System.out.println(player3.getName()
-                + " has " + player3.getHandSize() + " cards.");
+        System.out.println("Previous: "
+                + players.movePrevious().getName());
     }
 }
