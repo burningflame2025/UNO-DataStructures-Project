@@ -73,4 +73,26 @@ public class SinglyLinkedList<T> {
 
         return removedData;
     }
+
+    public T remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index");
+        }
+
+        if (index == 0) {
+            return removeFirst();
+        }
+
+        Node<T> current = head;
+
+        for (int i = 0; i < index - 1; i++) {
+            current = current.next;
+        }
+
+        T removedData = current.next.data;
+        current.next = current.next.next;
+        size--;
+
+        return removedData;
+    }
 }
