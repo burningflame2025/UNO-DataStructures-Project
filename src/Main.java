@@ -1,26 +1,31 @@
-import controller.Game;
-import model.BotPlayer;
-import model.HumanPlayer;
+import controller.RuleManager;
+import model.Card;
+import model.CardType;
+import model.Color;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Game game = new Game();
+        RuleManager ruleManager = new RuleManager();
 
-        HumanPlayer player1 = new HumanPlayer("Zahra");
-        BotPlayer player2 = new BotPlayer("Bot 1");
-        BotPlayer player3 = new BotPlayer("Bot 2");
+        Card topCard = new Card(Color.RED, CardType.NUMBER, 5);
 
-        game.addPlayer(player1);
-        game.addPlayer(player2);
-        game.addPlayer(player3);
+        Card sameColor = new Card(Color.RED, CardType.NUMBER, 2);
+        Card sameNumber = new Card(Color.BLUE, CardType.NUMBER, 5);
+        Card wildCard = new Card(Color.WILD, CardType.WILD, -1);
+        Card invalidCard = new Card(Color.GREEN, CardType.NUMBER, 8);
 
-        game.setupGame();
-        game.dealCards(7);
-        game.startRound();
+        System.out.println("Same color: "
+                + ruleManager.isValidMove(sameColor, topCard));
 
-        System.out.println("Round started!");
-        System.out.println("First card on table: " + game.getTopCard());
+        System.out.println("Same number: "
+                + ruleManager.isValidMove(sameNumber, topCard));
+
+        System.out.println("Wild card: "
+                + ruleManager.isValidMove(wildCard, topCard));
+
+        System.out.println("Invalid card: "
+                + ruleManager.isValidMove(invalidCard, topCard));
     }
 }
