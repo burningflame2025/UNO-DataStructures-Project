@@ -1,4 +1,9 @@
 package model;
 
-public class Color {
+public enum Color {
+    RED,
+    BLUE,
+    GREEN,
+    YELLOW,
+    WILD
 }
