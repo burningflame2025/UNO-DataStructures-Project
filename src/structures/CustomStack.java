@@ -23,4 +23,12 @@ public class CustomStack<T> {
     public int size() {
         return list.size();
     }
+
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Stack is empty");
+        }
+
+        return list.get(0);
+    }
 }

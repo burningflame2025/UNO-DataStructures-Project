@@ -1,5 +1,6 @@
 package controller;
 
+import model.Card;
 import model.Player;
 import structures.SinglyLinkedList;
 
@@ -7,6 +8,7 @@ public class Game {
 
     private Deck deck;
     private SinglyLinkedList<Player> players;
+    private Round round;
 
     public Game() {
         deck = new Deck();
@@ -20,6 +22,8 @@ public class Game {
     public void setupGame() {
         deck.createStandardDeck();
         deck.shuffle();
+
+        round = new Round(deck);
     }
 
     public void dealCards(int numberOfCards) {
@@ -32,5 +36,12 @@ public class Game {
                 player.addCard(deck.drawCard());
             }
         }
+    }
+
+    public void startRound() {
+        round.startRound();
+    }
+    public Card getTopCard() {
+        return round.getTopCard();
     }
 }

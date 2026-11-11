@@ -1,4 +1,4 @@
-import controller.TurnManager;
+import controller.Game;
 import model.BotPlayer;
 import model.HumanPlayer;
 
@@ -6,26 +6,21 @@ public class Main {
 
     public static void main(String[] args) {
 
-        TurnManager turnManager = new TurnManager();
+        Game game = new Game();
 
-        turnManager.addPlayer(new HumanPlayer("Zahra"));
-        turnManager.addPlayer(new BotPlayer("Bot 1"));
-        turnManager.addPlayer(new BotPlayer("Bot 2"));
+        HumanPlayer player1 = new HumanPlayer("Zahra");
+        BotPlayer player2 = new BotPlayer("Bot 1");
+        BotPlayer player3 = new BotPlayer("Bot 2");
 
-        System.out.println("Current player: "
-                + turnManager.getCurrentPlayer().getName());
+        game.addPlayer(player1);
+        game.addPlayer(player2);
+        game.addPlayer(player3);
 
-        System.out.println("Next player: "
-                + turnManager.nextTurn().getName());
+        game.setupGame();
+        game.dealCards(7);
+        game.startRound();
 
-        System.out.println("Next player: "
-                + turnManager.nextTurn().getName());
-
-        turnManager.reverseDirection();
-
-        System.out.println("Direction reversed!");
-
-        System.out.println("Next player: "
-                + turnManager.nextTurn().getName());
+        System.out.println("Round started!");
+        System.out.println("First card on table: " + game.getTopCard());
     }
 }
