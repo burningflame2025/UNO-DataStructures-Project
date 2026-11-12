@@ -38,40 +38,42 @@ public class Main {
                     + currentPlayer.getHand().get(i));
         }
 
-        int wildIndex = -1;
+        int wildDrawFourIndex = -1;
 
         for (int i = 0; i < currentPlayer.getHandSize(); i++) {
 
             Card card = currentPlayer.getHand().get(i);
 
-            if (card.getType() == CardType.WILD) {
-                wildIndex = i;
+            if (card.getType() == CardType.WILD_DRAW_FOUR) {
+                wildDrawFourIndex = i;
                 break;
             }
         }
+        int botCardsBefore = player2.getHandSize();
 
-        if (wildIndex != -1) {
+        if (wildDrawFourIndex != -1) {
 
-            System.out.println("\nPlaying: "
-                    + currentPlayer.getHand().get(wildIndex));
+            System.out.println("Playing: "
+                    + currentPlayer.getHand().get(wildDrawFourIndex));
 
-            boolean result = game.playCard(wildIndex);
+            boolean result = game.playCard(wildDrawFourIndex);
 
             System.out.println("Move successful: " + result);
-            System.out.println("New top card: "
-                    + game.getTopCard());
+            System.out.println("New top card: " + game.getTopCard());
+
+            System.out.println("Bot 1 cards before: " + botCardsBefore);
+            System.out.println("Bot 1 cards after: " + player2.getHandSize());
 
             game.chooseWildColor(Color.RED);
 
             System.out.println("Selected color: RED");
-            System.out.println("Active color after: "
-                    + game.getActiveColor());
+            System.out.println("Active color: " + game.getActiveColor());
 
-            System.out.println("Next player: "
+            System.out.println("Current player: "
                     + game.getCurrentPlayer().getName());
 
         } else {
-            System.out.println("No WILD card found for testing.");
+            System.out.println("No WILD_DRAW_FOUR card found.");
         }
     }
 }

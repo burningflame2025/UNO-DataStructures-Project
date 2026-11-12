@@ -110,6 +110,10 @@ public class Game {
         } else if (card.getType() == CardType.DRAW_TWO) {
             turnManager.nextTurn();
             drawCardsForCurrentPlayer(2);
+
+        } else if (card.getType() == CardType.WILD_DRAW_FOUR) {
+            turnManager.nextTurn();
+            drawCardsForCurrentPlayer(4);
         }
     }
 
