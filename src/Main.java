@@ -1,6 +1,7 @@
 import controller.Game;
 import model.BotPlayer;
 import model.Card;
+import model.CardType;
 import model.HumanPlayer;
 import model.Player;
 
@@ -22,41 +23,55 @@ public class Main {
         game.dealCards(7);
         game.startRound();
 
+        System.out.println("===== GAME START =====");
         System.out.println("Top card: " + game.getTopCard());
 
         Player currentPlayer = game.getCurrentPlayer();
 
-        System.out.println("Current player: " + currentPlayer.getName());
-        System.out.println("Cards before drawing: "
-                + currentPlayer.getHandSize());
+        System.out.println("Current player: "
+                + currentPlayer.getName());
 
-        Card drawnCard = game.drawCardForCurrentPlayer();
+        System.out.println("\nCards:");
 
-        System.out.println("Drawn card: " + drawnCard);
-        System.out.println("Cards after drawing: "
-                + currentPlayer.getHandSize());
+        for (int i = 0; i < currentPlayer.getHandSize(); i++) {
+            System.out.println(i + ": "
+                    + currentPlayer.getHand().get(i));
+        }
 
-        boolean playable = game.isCardPlayable(drawnCard);
+        int reverseIndex = -1;
 
-        System.out.println("Is drawn card playable: " + playable);
+        for (int i = 0; i < currentPlayer.getHandSize(); i++) {
 
-        if (playable) {
-            int drawnCardIndex = currentPlayer.getHandSize() - 1;
+            Card card = currentPlayer.getHand().get(i);
 
-            boolean result = game.playCard(drawnCardIndex);
+            if (card.getType() == CardType.REVERSE
+                    && game.isCardPlayable(card)) {
 
-            System.out.println("Drawn card played: " + result);
-            System.out.println("New top card: " + game.getTopCard());
-            System.out.println("Next player: "
+                reverseIndex = i;
+                break;
+            }
+        }
+
+        System.out.println("\n===== REVERSE TEST =====");
+
+        if (reverseIndex != -1) {
+
+            System.out.println("Playing: "
+                    + currentPlayer.getHand().get(reverseIndex));
+
+            boolean result = game.playCard(reverseIndex);
+
+            System.out.println("Move successful: " + result);
+            System.out.println("New top card: "
+                    + game.getTopCard());
+
+            System.out.println("Current player after REVERSE: "
                     + game.getCurrentPlayer().getName());
 
         } else {
-            System.out.println("Drawn card cannot be played.");
-
-            game.endTurn();
-
-            System.out.println("Next player: "
-                    + game.getCurrentPlayer().getName());
+            System.out.println(
+                    "No playable REVERSE card found for testing."
+            );
         }
     }
 }

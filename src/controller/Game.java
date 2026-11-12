@@ -1,6 +1,7 @@
 package controller;
 
 import model.Card;
+import model.CardType;
 import model.Player;
 import structures.SinglyLinkedList;
 
@@ -68,8 +69,11 @@ public class Game {
         if (!ruleManager.isValidMove(selectedCard, round.getTopCard())) {
             return false;
         }
+
         currentPlayer.removeCard(cardIndex);
         round.playCard(selectedCard);
+
+        applyCardEffect(selectedCard);
 
         turnManager.nextTurn();
 
@@ -92,5 +96,15 @@ public class Game {
 
     public void endTurn() {
         turnManager.nextTurn();
+    }
+
+    private void applyCardEffect(Card card) {
+
+        if (card.getType() == CardType.SKIP) {
+            turnManager.nextTurn();
+
+        } else if (card.getType() == CardType.REVERSE) {
+            turnManager.reverseDirection();
+        }
     }
 }
