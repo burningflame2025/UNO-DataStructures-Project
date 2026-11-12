@@ -38,40 +38,37 @@ public class Main {
                     + currentPlayer.getHand().get(i));
         }
 
-        int reverseIndex = -1;
+        int drawTwoIndex = -1;
 
         for (int i = 0; i < currentPlayer.getHandSize(); i++) {
 
             Card card = currentPlayer.getHand().get(i);
 
-            if (card.getType() == CardType.REVERSE
+            if (card.getType() == CardType.DRAW_TWO
                     && game.isCardPlayable(card)) {
 
-                reverseIndex = i;
+                drawTwoIndex = i;
                 break;
             }
         }
+        int botCardsBefore = player2.getHandSize();
 
-        System.out.println("\n===== REVERSE TEST =====");
-
-        if (reverseIndex != -1) {
+        if (drawTwoIndex != -1) {
 
             System.out.println("Playing: "
-                    + currentPlayer.getHand().get(reverseIndex));
+                    + currentPlayer.getHand().get(drawTwoIndex));
 
-            boolean result = game.playCard(reverseIndex);
+            boolean result = game.playCard(drawTwoIndex);
+
 
             System.out.println("Move successful: " + result);
-            System.out.println("New top card: "
-                    + game.getTopCard());
-
-            System.out.println("Current player after REVERSE: "
+            System.out.println("Bot 1 cards before: " + botCardsBefore);
+            System.out.println("Bot 1 cards after: " + player2.getHandSize());
+            System.out.println("Current player: "
                     + game.getCurrentPlayer().getName());
 
         } else {
-            System.out.println(
-                    "No playable REVERSE card found for testing."
-            );
+            System.out.println("No playable DRAW_TWO card found.");
         }
     }
 }

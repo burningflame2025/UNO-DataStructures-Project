@@ -105,6 +105,19 @@ public class Game {
 
         } else if (card.getType() == CardType.REVERSE) {
             turnManager.reverseDirection();
+
+        } else if (card.getType() == CardType.DRAW_TWO) {
+            turnManager.nextTurn();
+            drawCardsForCurrentPlayer(2);
+        }
+    }
+
+    private void drawCardsForCurrentPlayer(int count) {
+
+        Player currentPlayer = turnManager.getCurrentPlayer();
+
+        for (int i = 0; i < count; i++) {
+            currentPlayer.addCard(deck.drawCard());
         }
     }
 }
