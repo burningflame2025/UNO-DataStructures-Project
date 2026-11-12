@@ -2,6 +2,7 @@ import controller.Game;
 import model.BotPlayer;
 import model.Card;
 import model.CardType;
+import model.Color;
 import model.HumanPlayer;
 import model.Player;
 
@@ -23,13 +24,12 @@ public class Main {
         game.dealCards(7);
         game.startRound();
 
-        System.out.println("===== GAME START =====");
-        System.out.println("Top card: " + game.getTopCard());
-
         Player currentPlayer = game.getCurrentPlayer();
 
-        System.out.println("Current player: "
-                + currentPlayer.getName());
+        System.out.println("===== WILD TEST =====");
+        System.out.println("Top card: " + game.getTopCard());
+        System.out.println("Active color before: "
+                + game.getActiveColor());
 
         System.out.println("\nCards:");
 
@@ -38,37 +38,40 @@ public class Main {
                     + currentPlayer.getHand().get(i));
         }
 
-        int drawTwoIndex = -1;
+        int wildIndex = -1;
 
         for (int i = 0; i < currentPlayer.getHandSize(); i++) {
 
             Card card = currentPlayer.getHand().get(i);
 
-            if (card.getType() == CardType.DRAW_TWO
-                    && game.isCardPlayable(card)) {
-
-                drawTwoIndex = i;
+            if (card.getType() == CardType.WILD) {
+                wildIndex = i;
                 break;
             }
         }
-        int botCardsBefore = player2.getHandSize();
 
-        if (drawTwoIndex != -1) {
+        if (wildIndex != -1) {
 
-            System.out.println("Playing: "
-                    + currentPlayer.getHand().get(drawTwoIndex));
+            System.out.println("\nPlaying: "
+                    + currentPlayer.getHand().get(wildIndex));
 
-            boolean result = game.playCard(drawTwoIndex);
-
+            boolean result = game.playCard(wildIndex);
 
             System.out.println("Move successful: " + result);
-            System.out.println("Bot 1 cards before: " + botCardsBefore);
-            System.out.println("Bot 1 cards after: " + player2.getHandSize());
-            System.out.println("Current player: "
+            System.out.println("New top card: "
+                    + game.getTopCard());
+
+            game.chooseWildColor(Color.RED);
+
+            System.out.println("Selected color: RED");
+            System.out.println("Active color after: "
+                    + game.getActiveColor());
+
+            System.out.println("Next player: "
                     + game.getCurrentPlayer().getName());
 
         } else {
-            System.out.println("No playable DRAW_TWO card found.");
+            System.out.println("No WILD card found for testing.");
         }
     }
 }

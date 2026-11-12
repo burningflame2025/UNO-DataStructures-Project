@@ -2,6 +2,7 @@ package controller;
 
 import model.Card;
 import model.CardType;
+import model.Color;
 import model.Player;
 import structures.SinglyLinkedList;
 
@@ -66,7 +67,7 @@ public class Game {
 
         Card selectedCard = currentPlayer.getHand().get(cardIndex);
 
-        if (!ruleManager.isValidMove(selectedCard, round.getTopCard())) {
+        if (!ruleManager.isValidMove(selectedCard, round.getTopCard(), round.getActiveColor())) {
             return false;
         }
 
@@ -91,7 +92,7 @@ public class Game {
         return drawnCard;
     }
     public boolean isCardPlayable(Card card) {
-        return ruleManager.isValidMove(card, round.getTopCard());
+        return ruleManager.isValidMove(card, round.getTopCard(), round.getActiveColor());
     }
 
     public void endTurn() {
@@ -119,5 +120,13 @@ public class Game {
         for (int i = 0; i < count; i++) {
             currentPlayer.addCard(deck.drawCard());
         }
+    }
+
+    public void chooseWildColor(Color color) {
+        round.setActiveColor(color);
+    }
+
+    public Color getActiveColor() {
+        return round.getActiveColor();
     }
 }
