@@ -13,6 +13,7 @@ public class Game {
     private Round round;
     private TurnManager turnManager;
     private RuleManager ruleManager;
+    private Player winner;
 
     public Game() {
         deck = new Deck();
@@ -73,6 +74,11 @@ public class Game {
 
         currentPlayer.removeCard(cardIndex);
         round.playCard(selectedCard);
+        checkWinner(currentPlayer);
+
+        if (isGameOver()) {
+            return true;
+        }
 
         applyCardEffect(selectedCard);
 
@@ -132,5 +138,18 @@ public class Game {
 
     public Color getActiveColor() {
         return round.getActiveColor();
+    }
+
+    private void checkWinner(Player player) {
+
+        if (player.getHandSize() == 0) {
+            winner = player;
+        }
+    }
+    public Player getWinner() {
+        return winner;
+    }
+    public boolean isGameOver() {
+        return winner != null;
     }
 }
